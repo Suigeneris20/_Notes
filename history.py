@@ -262,3 +262,104 @@ class HistoryScreen(Screen):
             status = self.query_one("#table-status", Static)
             status.update(f"Export failed: {str(e)}")
             status.add_class("error-message")
+
+
+'''
+/* History Screen Styles */
+#history-container {
+    padding: 2;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.history-title {
+    text-style: bold;
+    color: $accent;
+    text-align: center;
+    margin-bottom: 2;
+}
+
+.filter-panel {
+    background: $panel;
+    border: solid $primary;
+    padding: 2;
+    margin-bottom: 1;
+}
+
+.filter-row {
+    align: left middle;
+    height: auto;
+}
+
+.filter-label {
+    margin-right: 1;
+    min-width: 10;
+}
+
+.filter-row Select {
+    width: 20;
+    margin-right: 2;
+}
+
+.filter-row Input {
+    width: 30;
+    margin-right: 2;
+}
+
+.stats-panel {
+    background: $panel;
+    border: solid $primary;
+    padding: 2;
+    margin-bottom: 1;
+}
+
+.stats-row {
+    align: center middle;
+    height: auto;
+}
+
+.stat-box {
+    width: 1fr;
+    align: center middle;
+    padding: 1;
+}
+
+.stat-label {
+    color: $text-muted;
+    text-align: center;
+    margin-bottom: 1;
+}
+
+.stat-box Static:not(.stat-label) {
+    text-style: bold;
+    color: $accent;
+    text-align: center;
+}
+
+.table-panel {
+    background: $panel;
+    border: solid $primary;
+    padding: 2;
+    margin-bottom: 1;
+    height: auto;
+}
+
+#history-table {
+    height: 20;
+    margin-bottom: 1;
+}
+
+#table-status {
+    text-align: center;
+    margin-top: 1;
+}
+
+#history-actions {
+    align: center middle;
+    height: auto;
+}
+
+#history-actions Button {
+    margin: 0 1;
+}
+'''
