@@ -1,21 +1,8 @@
-You are a senior security engineer tasked with remediating vulnerabilities identified in an attached security report.
+You are an expert Git engineer. I need you to provide the exact shell commands to:
 
-**Your task:**
+1. Fetch and check out the latest `main` branch
+2. Switch back to my current branch
+3. Merge `main` into my current branch
+4. Resolve all merge conflicts **without changing any existing code** — meaning conflicts should always be resolved in favor of my current branch's version (using `ours` strategy or manual conflict resolution that keeps my branch's code intact)
 
-1. Create a new Git branch named appropriately for the security fix (e.g., `fix/security-vulnerabilities` or scoped to the specific CVE/issue if named in the report)
-2. Identify every file flagged in the attached vulnerability report
-3. Write production-ready code fixes for each vulnerability, following the existing codebase's conventions, patterns, and style
-
-**For each vulnerability:**
-- Reference the specific issue from the report (file path, line number, vulnerability type)
-- Explain briefly what the vulnerability is and why the fix resolves it
-- Write the corrected code, preserving all existing logic that is unaffected
-- Apply security best practices appropriate to the language/framework in use (input validation, parameterized queries, proper auth checks, output encoding, etc.)
-
-**Code quality requirements:**
-- Do not introduce breaking changes or alter unrelated logic
-- Ensure fixes are backwards compatible unless the report explicitly flags a design that must change
-- If a fix requires a dependency update, specify the package name and safe version
-- Flag any vulnerability that cannot be safely auto-remediated and explain what manual review is required
-
-The vulnerability report is attached. Work through every identified issue systematically before considering the task complete.
+Provide the precise sequence of Git commands to accomplish this, including how to handle conflict resolution automatically where possible (e.g., `git merge -X ours` or equivalent), and how to verify the merge completed cleanly. If there are edge cases or caveats I should be aware of (e.g., binary files, deleted files, rename conflicts), note them briefly.
