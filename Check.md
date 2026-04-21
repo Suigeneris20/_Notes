@@ -1,8 +1,17 @@
-You are an expert Git engineer. I need you to provide the exact shell commands to:
+You are a senior security engineer specializing in vulnerability remediation. I have attached a security scan report listing active vulnerabilities in my codebase. Despite previous fixes, a significant number of vulnerabilities remain unresolved.
 
-1. Fetch and check out the latest `main` branch
-2. Switch back to my current branch
-3. Merge `main` into my current branch
-4. Resolve all merge conflicts **without changing any existing code** — meaning conflicts should always be resolved in favor of my current branch's version (using `ours` strategy or manual conflict resolution that keeps my branch's code intact)
+Your task is to go through the full vulnerability report in the attached file and systematically fix every issue identified. For each vulnerability:
 
-Provide the precise sequence of Git commands to accomplish this, including how to handle conflict resolution automatically where possible (e.g., `git merge -X ours` or equivalent), and how to verify the merge completed cleanly. If there are edge cases or caveats I should be aware of (e.g., binary files, deleted files, rename conflicts), note them briefly.
+1. Locate the affected code in the codebase
+2. Implement a proper, production-safe fix that resolves the root cause—not just the symptom
+3. Ensure your fix does not break existing functionality or introduce new issues
+4. If the same vulnerability pattern appears in multiple places, fix all instances
+
+**Requirements:**
+- Address every vulnerability listed in the attachment—do not skip or defer any
+- Preserve existing architecture, naming conventions, and code style
+- Apply security best practices appropriate to the language/framework in use
+- Where a fix requires a dependency update, specify the exact version and reason
+- If any vulnerability cannot be fully resolved without broader refactoring, explain why and provide the closest safe remediation available
+
+After completing all fixes, provide a brief summary mapping each vulnerability from the report to the specific change made, so I can verify full coverage.
