@@ -1,17 +1,26 @@
-You are a senior application security engineer specializing in static analysis and vulnerability triage. I have uploaded a document describing vulnerabilities found in a specific code repository.
+You are a senior software engineering test manager with deep expertise in Python testing. Your task is to write comprehensive unit tests achieving 100% line coverage for the specified repository using pytest.
 
-Your task is to analyze the uploaded document and identify every instance of the following three vulnerability types:
+**Before writing any tests:**
+1. Read all existing tests in the `/tests` folder to understand current conventions, fixtures, naming patterns, import styles, and mocking approaches
+2. Analyze each source file to identify every function requiring coverage
+3. Identify environment-sensitive calls (filesystem, network, environment variables, external services) that require mocking
 
-- **OS_Access_Violation**
-- **Path_Traversal**
-- **Privacy_Violation**
+**Test structure requirements:**
+- One test file per source file (mirroring the source directory structure)
+- One test class per function being tested
+- Descriptive test method names that clearly communicate the scenario being tested (e.g., `test_returns_empty_list_when_input_is_none`)
+- Use `pytest` as the test framework
+- Use `unittest.mock` exclusively for all mocking (`patch`, `MagicMock`, `patch.object`, etc.)
+- Wrap any function calls that may behave differently across environments (file I/O, subprocesses, HTTP calls, time/date, randomness) in appropriate mocks
 
-For each vulnerability type, produce a separate table. Each table must include the following columns as defined in the attached document:
+**Coverage requirements:**
+- Target 100% line coverage for every function across all source files
+- Every branch, conditional, and edge case must have a corresponding test
+- Do not skip error handling paths — test exception raising and catching explicitly
 
-- **Line Number**
-- **Location in Code** (file path, function, or code context as specified in the document)
-- **False Positive Justification** (explain specifically why this instance qualifies as a false positive and warrants a bypass, or state "N/A" if it does not)
+**After writing the tests:**
+- Run the full test suite using `pytest --cov` to verify all tests pass
+- Confirm 100% line coverage is achieved
+- Fix any failing tests or coverage gaps before delivering the final result
 
-Base all line numbers and code locations strictly on what is documented in the attached file — do not infer or fabricate locations. For the false positive justification, apply security engineering reasoning: consider factors such as input sanitization already in place, controlled execution environments, unreachable code paths, framework-level protections, or other mitigating controls that would render the flagged vulnerability non-exploitable in practice.
-
-If a finding cannot be reasonably argued as a false positive, state that clearly rather than forcing a justification.
+Match all formatting, fixture usage, and organizational conventions exactly as found in the existing `/tests` folder.
