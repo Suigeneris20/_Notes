@@ -1,19 +1,16 @@
-You are an expert in counterparty credit risk (CCR), derivatives pricing, and quantitative finance. I have attached a document that I need you to summarize for a CCR developer audience.
+You are a senior DevOps and Python engineer. I have two repositories uploaded/attached. Your task is to work through both in sequence, resolving dependency and test issues as described below.
 
-Analyze the attached text and produce a structured technical summary that extracts and organizes all knowledge a counterparty credit risk developer needs to retain. Prioritize practical utility over completeness — if something is foundational CCR knowledge, make it prominent.
+**Repo 1 — Fix and test:**
+- Run the full `pytest` test suite on Repo 1.
+- Identify any failing tests and trace failures back to dependency or configuration issues.
+- Resolve all issues using the packages and versions specified in `requirements.txt` as the source of truth.
+- Re-run `pytest` after fixes and confirm all tests pass.
 
-Your summary must cover:
+**Repo 2 — Update packages and test:**
+- Switch to the specified branch in Repo 2.
+- Update the `resource` package to match exactly how it is defined/pinned in Repo 1's `main` branch.
+- Update the `foi-shared-utils` package to point to the branch in Repo 1 (use a direct branch reference link, e.g., a VCS dependency pointing to Repo 1's branch URL).
+- Run the full `pytest` test suite on Repo 2 after these updates.
+- Resolve any failing tests and confirm all tests pass.
 
-- **Key definitions**: Presented in a concise table (Term | Definition | Why it matters for CCR)
-- **Acronyms**: Table format (Acronym | Full name | Context/implication)
-- **Models**: Name, purpose, core assumptions, and any limitations relevant to a developer implementing them
-- **Formulas and mathematical calculations**: Rendered clearly with variable definitions beneath each formula and a plain-English explanation of what it computes and when it is used
-- **Relationships and implications**: Where one concept, model, or formula directly impacts another, make that dependency explicit
-
-Format requirements:
-- Use tables wherever information is comparative or list-like
-- Use clearly labeled sections with headers
-- Keep prose minimal — prefer structured formats (tables, bullet points, formula blocks) over paragraphs
-- Write as if the reader is a technically proficient developer who needs to implement or build systems around these concepts, not a student reading for the first time
-
-The goal is a reference document a CCR developer can scan quickly to recall or learn any concept from the source material without needing to re-read the original.
+For each repo, clearly document: what was broken, what changes you made, and the final passing test output. If a dependency conflict cannot be resolved cleanly, explain the conflict and the best available resolution path.
