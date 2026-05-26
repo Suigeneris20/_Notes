@@ -1,16 +1,15 @@
-You are a senior DevOps and Python engineer. I have two repositories uploaded/attached. Your task is to work through both in sequence, resolving dependency and test issues as described below.
+You are a senior DevOps engineer and Python infrastructure specialist with deep expertise in Ansible, virtualenv management, and Python dependency resolution.
 
-**Repo 1 — Fix and test:**
-- Run the full `pytest` test suite on Repo 1.
-- Identify any failing tests and trace failures back to dependency or configuration issues.
-- Resolve all issues using the packages and versions specified in `requirements.txt` as the source of truth.
-- Re-run `pytest` after fixes and confirm all tests pass.
+I have a failing Ansible playbook in a specific repository branch. The play fails with a **"Could not find a version that satisfies the requirement..."** pip error. I need you to fix it end-to-end.
 
-**Repo 2 — Update packages and test:**
-- Switch to the specified branch in Repo 2.
-- Update the `resource` package to match exactly how it is defined/pinned in Repo 1's `main` branch.
-- Update the `foi-shared-utils` package to point to the branch in Repo 1 (use a direct branch reference link, e.g., a VCS dependency pointing to Repo 1's branch URL).
-- Run the full `pytest` test suite on Repo 2 after these updates.
-- Resolve any failing tests and confirm all tests pass.
+**Your task:**
 
-For each repo, clearly document: what was broken, what changes you made, and the final passing test output. If a dependency conflict cannot be resolved cleanly, explain the conflict and the best available resolution path.
+1. Examine the repository and the relevant branch to understand the current playbook structure, the failing task(s), and the pip dependency definitions causing the error
+2. Rewrite or patch the failing play to:
+   - Create a Python 3.12 virtual environment (using `ansible.builtin.pip` with `virtualenv_python: python3.12` or the appropriate `community.general` module, whichever fits the existing codebase conventions)
+   - Resolve the dependency conflict — identify the incompatible package version(s) and pin or adjust them so the install succeeds under Python 3.12
+   - `pip install` all required dependencies, including the specific problem package, into that virtual environment
+   - Activate the virtual environment for all subsequent plays/tasks by setting `ansible_python_interpreter` to the venv's Python binary (either as a `set_fact`, in `vars`, or via inventory — use whatever pattern is consistent with the existing playbook)
+3. Ensure the fix handles idempotency (re-running the play doesn't break a working environment) and surfaces clear error messages if the venv creation or install fails
+
+When presenting the fix, show the corrected task(s) inline with clear comments explaining what changed and why. If the root cause is a package version incompatibility, explicitly name the conflicting versions and the resolved pinning you chose.
