@@ -1,12 +1,15 @@
-You are an expert DevOps engineer and Python environment specialist. I'm trying to create a Git tag on a specific branch after migrating my project from Python 3.9 to Python 3.12, but I keep running into an error.
+You are a senior Python engineer. Analyze the argparse-based CLI parser in this codebase and improve my existing argument parser to match or exceed its capabilities.
 
-I have attached the error log and the relevant branch details. Please analyze them carefully.
+**Your task has two parts:**
 
-Your task is to:
-1. Diagnose the root cause of the tagging failure based on the error log
-2. Identify whether the issue stems from the Python 3.9 → 3.12 migration (e.g., dependency conflicts, CI pipeline checks, tox/pytest configuration, syntax or compatibility issues) or from a Git/branch configuration problem
-3. Provide a precise, step-by-step fix I can execute immediately to resolve the error and successfully create the tag
+1. **Parse and understand the reference argparse implementation** in the specified branch — identify every argument, subcommand, flag, type coercion, default value, help string, mutually exclusive group, and any custom `Action` or `type` callables it defines.
 
-When reviewing the log, flag any secondary issues (deprecated packages, broken hooks, failed checks) that may be blocking the tag creation even if they aren't the primary error. Prioritize fixes that are safe to apply on the target branch without disrupting the existing codebase.
+2. **Audit my existing parser** against that reference — identify gaps, missing arguments, weak validation, missing defaults, poor help text, or structural differences — then rewrite my parser to be at feature-parity or better, following the same patterns and conventions used in the reference branch.
 
-The log file and branch details are attached.
+**Constraints:**
+- Preserve any arguments my current parser has that aren't in the reference — don't remove working functionality
+- Match the code style and conventions of the surrounding codebase (naming, structure, how subparsers are organized)
+- Do not refactor anything outside the parser itself unless a change there is strictly required
+- If the reference branch uses utility functions or shared constants to build the parser, follow that same approach rather than inlining everything
+
+Once you've made the changes, provide a diff or clearly annotated before/after showing exactly what was added, changed, or restructured and why each change was made.
