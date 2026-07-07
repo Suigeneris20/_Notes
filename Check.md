@@ -1,11 +1,21 @@
-Summarize the attached document into a focused study guide on Counterparty Credit Risk (CCR) that can be fully studied and absorbed in just a few hours.
-Structure the summary to answer the following questions clearly and concisely:
-Stress Testing: How is CCR stress testing performed across Derivatives and SFT portfolios? What does scenario design involve, how is exposure behavior analyzed under stress, and how are exposure drivers and stress vulnerabilities identified?
-CCAR: What are the key components of CCR-related CCAR work — exposure projections, documentation, and narrative construction? How do stress testing and CCAR processes interact?
-Exposure Metrics: Explain PFE, EPE, and EAD (including their stressed variants). What causes key exposure movements, how are concentration risks measured, and how are drivers of change explained?
-Collateral & Netting: How do collateral and netting structures affect exposure calculations and model-driven exposure outputs?
-Wrong-Way Risk: What is wrong-way risk, how are stressed wrong-way risk indicators evaluated, and how is concentration analyzed across sectors, collateral types, and counterparties?
-Risk Appetite & Monitoring: How are CCR risk appetite metrics, early-warning indicators, and threshold breaches monitored? What constitutes a counterparty-level emerging risk?
-Model Interpretation & Challenge: How should exposure model behavior under stress be reviewed and challenged? What does effective methodology assessment look like?
-Reporting & Governance: What makes high-quality stress-testing and CCAR reporting for senior management? What documentation, review routines, and governance standards apply?
-For each section, prioritize practical explanations, key definitions, common drivers/examples, and the "why it matters" framing — as if preparing someone to discuss these topics fluently. Keep the total length digestible within a few hours of study: concise bullet points, plain language for complex concepts, and a short glossary of key terms (PFE, EPE, EAD, SFT, CSA, wrong-way risk, etc.) at the end.
+Summarize the attached document into a conceptual study guide on Counterparty Credit Risk (CCR) that can be fully absorbed in just a few hours.
+
+Focus on intuition, definitions, and the "why it matters" behind each topic. Structure the summary around these questions:
+
+1. **Stress Testing:** What is CCR stress testing and why is it done? Conceptually, how do scenarios translate into exposure changes across Derivatives and SFT portfolios? What does it mean to identify a "stress vulnerability"?
+
+2. **CCAR:** What is CCAR at a high level, and what role does CCR play within it? What are exposure projections and narratives, and why do regulators care about them?
+
+3. **Exposure Metrics:** Explain PFE, EPE, and EAD in plain language, including their stressed variants. Use analogies or simple examples. Why do exposures move, and what does "concentration risk" mean in practice?
+
+4. **Collateral & Netting:** Conceptually, how do collateral agreements and netting reduce exposure? What is a CSA and why does it matter?
+
+5. **Wrong-Way Risk:** What is wrong-way risk, with intuitive examples (general vs. specific)? Why is it dangerous under stress?
+
+6. **Risk Appetite & Monitoring:** What is a risk appetite framework? What are early-warning indicators and threshold breaches, and how do they signal emerging counterparty risk?
+
+7. **Model Interpretation & Challenge:** What does it mean to "interpret and challenge" an exposure model? Why is this role distinct from building models?
+
+8. **Reporting & Governance:** What makes stress-testing reporting effective for senior audiences? Why do documentation and governance standards matter?
+
+Format: plain-language explanations, real-world examples, minimal math. End with a glossary of key terms (PFE, EPE, EAD, SFT, CSA, wrong-way risk, netting set, margin period of risk). Keep total length readable in 2–3 hours.
