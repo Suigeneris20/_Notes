@@ -1,21 +1,21 @@
-Summarize the attached document into a conceptual study guide on Counterparty Credit Risk (CCR) that can be fully absorbed in just a few hours.
+Summarize the attached document into a quantitatively focused study guide on Counterparty Credit Risk (CCR) that can be mastered in just a few hours.
 
-Focus on intuition, definitions, and the "why it matters" behind each topic. Structure the summary around these questions:
+Emphasize formulas, calculation mechanics, and model behavior. Structure the summary around these questions:
 
-1. **Stress Testing:** What is CCR stress testing and why is it done? Conceptually, how do scenarios translate into exposure changes across Derivatives and SFT portfolios? What does it mean to identify a "stress vulnerability"?
+1. **Exposure Metrics — Definitions & Math:** Define PFE, EPE, EEPE, and EAD precisely, including how each is computed from simulated exposure paths (e.g., percentile-based PFE, time-averaged EPE). How are stressed variants calculated, and how does EAD feed into capital (e.g., IMM vs. SA-CCR)?
 
-2. **CCAR:** What is CCAR at a high level, and what role does CCR play within it? What are exposure projections and narratives, and why do regulators care about them?
+2. **Stress Testing Mechanics:** How are stress scenarios applied to exposure models for Derivatives and SFT portfolios? How do market factor shocks (rates, FX, equity, credit spreads, volatility) propagate into exposure profiles? How are exposure drivers decomposed and attributed?
 
-3. **Exposure Metrics:** Explain PFE, EPE, and EAD in plain language, including their stressed variants. Use analogies or simple examples. Why do exposures move, and what does "concentration risk" mean in practice?
+3. **CCAR Quantification:** How are exposure projections built under supervisory scenarios? What assumptions drive projected losses (e.g., counterparty defaults, CVA impacts), and how are results reconciled across baseline and adverse paths?
 
-4. **Collateral & Netting:** Conceptually, how do collateral agreements and netting reduce exposure? What is a CSA and why does it matter?
+4. **Collateral & Netting Math:** How do netting sets, thresholds, minimum transfer amounts, and margin period of risk enter exposure calculations? Quantify the exposure-reduction effect of collateral under a CSA, including under stressed margining assumptions.
 
-5. **Wrong-Way Risk:** What is wrong-way risk, with intuitive examples (general vs. specific)? Why is it dangerous under stress?
+5. **Wrong-Way Risk Measurement:** How is wrong-way risk quantified — correlation between exposure and counterparty credit quality? What stressed WWR indicators exist, and how is concentration measured across sectors, collateral types, and counterparties?
 
-6. **Risk Appetite & Monitoring:** What is a risk appetite framework? What are early-warning indicators and threshold breaches, and how do they signal emerging counterparty risk?
+6. **Risk Appetite Metrics:** What quantitative metrics are used (exposure limits, PFE limits, stressed exposure thresholds)? How are breaches computed and early-warning indicators calibrated?
 
-7. **Model Interpretation & Challenge:** What does it mean to "interpret and challenge" an exposure model? Why is this role distinct from building models?
+7. **Model Behavior Under Stress:** How should model outputs be validated for reasonableness under stress — path behavior, tail dynamics, mean reversion assumptions, calibration sensitivity? What constitutes effective quantitative challenge?
 
-8. **Reporting & Governance:** What makes stress-testing reporting effective for senior audiences? Why do documentation and governance standards matter?
+8. **Data & Aggregation:** How are large exposure datasets aggregated and analyzed (e.g., by netting set, counterparty, sector)? What checks ensure data accuracy in stress-testing workflows?
 
-Format: plain-language explanations, real-world examples, minimal math. End with a glossary of key terms (PFE, EPE, EAD, SFT, CSA, wrong-way risk, netting set, margin period of risk). Keep total length readable in 2–3 hours.
+Format: include formulas, worked mini-examples with numbers where possible, and comparison tables (e.g., PFE vs. EPE vs. EAD). End with a formula sheet and glossary. Keep total length digestible in 3–4 hours of focused study.
