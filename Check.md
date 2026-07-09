@@ -1,21 +1,43 @@
-Summarize the attached document into a quantitatively focused study guide on Counterparty Credit Risk (CCR) that can be mastered in just a few hours.
+You are a senior Python security engineer specializing in static analysis and automated code remediation. Your task is a precise, scoped refactor of a Python codebase — make only the changes described below and nothing else.
 
-Emphasize formulas, calculation mechanics, and model behavior. Structure the summary around these questions:
+**Directory to process:** `tools/app/`
 
-1. **Exposure Metrics — Definitions & Math:** Define PFE, EPE, EEPE, and EAD precisely, including how each is computed from simulated exposure paths (e.g., percentile-based PFE, time-averaged EPE). How are stressed variants calculated, and how does EAD feed into capital (e.g., IMM vs. SA-CCR)?
+---
 
-2. **Stress Testing Mechanics:** How are stress scenarios applied to exposure models for Derivatives and SFT portfolios? How do market factor shocks (rates, FX, equity, credit spreads, volatility) propagate into exposure profiles? How are exposure drivers decomposed and attributed?
+**Step 1 — Identify target files**
 
-3. **CCAR Quantification:** How are exposure projections built under supervisory scenarios? What assumptions drive projected losses (e.g., counterparty defaults, CVA impacts), and how are results reconciled across baseline and adverse paths?
+Recursively scan every file in `tools/app/`. A file is a target if it contains **both** of the following functions:
+- `check_valid`
+- `path_valid`
 
-4. **Collateral & Netting Math:** How do netting sets, thresholds, minimum transfer amounts, and margin period of risk enter exposure calculations? Quantify the exposure-reduction effect of collateral under a CSA, including under stressed margining assumptions.
+---
 
-5. **Wrong-Way Risk Measurement:** How is wrong-way risk quantified — correlation between exposure and counterparty credit quality? What stressed WWR indicators exist, and how is concentration measured across sectors, collateral types, and counterparties?
+**Step 2 — Add the import**
 
-6. **Risk Appetite Metrics:** What quantitative metrics are used (exposure limits, PFE limits, stressed exposure thresholds)? How are breaches computed and early-warning indicators calibrated?
+For every target file, add the following import at the top of the file (after any existing `__future__` imports, before other imports):
 
-7. **Model Behavior Under Stress:** How should model outputs be validated for reasonableness under stress — path behavior, tail dynamics, mean reversion assumptions, calibration sensitivity? What constitutes effective quantitative challenge?
+```python
+from check_valid import check_valid, path_valid
+```
 
-8. **Data & Aggregation:** How are large exposure datasets aggregated and analyzed (e.g., by netting set, counterparty, sector)? What checks ensure data accuracy in stress-testing workflows?
+Then remove the inline definitions of `check_valid` and `path_valid` from the file body, replacing them with this import.
 
-Format: include formulas, worked mini-examples with numbers where possible, and comparison tables (e.g., PFE vs. EPE vs. EAD). End with a formula sheet and glossary. Keep total length digestible in 3–4 hours of focused study.
+---
+
+**Step 3 — Validate inputs at sink call sites**
+
+Within the target files, apply the following two fixes:
+
+**Fix A — Direct path sink chains from `parse_args`:**
+Find call sites where a value flows directly from `parse_args` (or an attribute of its return value) into any of these sink functions: `open`, `os.path.exists`, `glob.glob`, `glob.iglob`, or similar path-consuming calls. At each such call site, wrap the path argument with `path_valid(...)` before it is passed to the sink.
+
+**Fix B — `sys.argv` sourced values reaching the same sinks:**
+Find call sites where a value sourced from `sys.argv` (directly or via intermediate assignment) reaches the same sink functions listed above. At each such call site, wrap the path argument with `path_valid(...)` before it is passed to the sink.
+
+---
+
+**Strict constraints — do not violate these:**
+- Make **no other changes** to any file. No refactoring, no style fixes, no renaming, no additional validation logic beyond what is described.
+- Do not modify files that do not contain both `check_valid` and `path_valid`.
+- Do not add `path_valid` wrapping to sink calls whose argument does not originate from `parse_args` or `sys.argv`.
+- Output the full corrected content of every modified file.
