@@ -1,43 +1,18 @@
-You are a senior Python security engineer specializing in static analysis and automated code remediation. Your task is a precise, scoped refactor of a Python codebase — make only the changes described below and nothing else.
+You are a senior security engineer refactoring a Python codebase for Checkmarx SAST compliance.
 
-**Directory to process:** `tools/app/`
+**Objective:** Consolidate all path traversal remediation logic — currently replicated across multiple files — into shared utility modules that can be imported, while ensuring Checkmarx can still trace the sanitization from each call site.
 
----
+**Context:** A reference branch already contains working remediations for path traversal sinks involving `exec`, `argv`, and `open`. Those fixes are currently duplicated inline wherever remediation was needed. The goal is to eliminate that replication without changing any functional behavior — only restructure where the validation logic lives.
 
-**Step 1 — Identify target files**
+**Checkmarx requirement (critical constraint):** Checkmarx resolves path traversal sanitization through data flow — it must be able to trace from the tainted input through the sanitization function to the sink within the same file's scope. This means:
+- Shared validation functions must be imported at the top of each file that uses them
+- The import must be in the same file as the sink call — Checkmarx does not follow cross-file sanitization unless the sanitizer is imported directly into the file containing the sink
+- Place the shared utility file(s) physically close to (ideally within the same directory as, or a direct parent of) each consuming script to make the import path explicit and traceable
 
-Recursively scan every file in `tools/app/`. A file is a target if it contains **both** of the following functions:
-- `check_valid`
-- `path_valid`
+**What to do:**
+1. Identify every remediation pattern applied to `exec`, `argv`, and `open` sinks in the reference branch
+2. Extract those validation/sanitization functions into one or more shared utility files (e.g., `path_validation.py`) placed at appropriate locations in the directory structure given that consuming scripts span multiple folders
+3. Replace each inline remediation with a call to the imported utility function — the import statement must appear in every file that contains a sink
+4. Do not modify any other logic, behavior, or code outside of this consolidation
 
----
-
-**Step 2 — Add the import**
-
-For every target file, add the following import at the top of the file (after any existing `__future__` imports, before other imports):
-
-```python
-from check_valid import check_valid, path_valid
-```
-
-Then remove the inline definitions of `check_valid` and `path_valid` from the file body, replacing them with this import.
-
----
-
-**Step 3 — Validate inputs at sink call sites**
-
-Within the target files, apply the following two fixes:
-
-**Fix A — Direct path sink chains from `parse_args`:**
-Find call sites where a value flows directly from `parse_args` (or an attribute of its return value) into any of these sink functions: `open`, `os.path.exists`, `glob.glob`, `glob.iglob`, or similar path-consuming calls. At each such call site, wrap the path argument with `path_valid(...)` before it is passed to the sink.
-
-**Fix B — `sys.argv` sourced values reaching the same sinks:**
-Find call sites where a value sourced from `sys.argv` (directly or via intermediate assignment) reaches the same sink functions listed above. At each such call site, wrap the path argument with `path_valid(...)` before it is passed to the sink.
-
----
-
-**Strict constraints — do not violate these:**
-- Make **no other changes** to any file. No refactoring, no style fixes, no renaming, no additional validation logic beyond what is described.
-- Do not modify files that do not contain both `check_valid` and `path_valid`.
-- Do not add `path_valid` wrapping to sink calls whose argument does not originate from `parse_args` or `sys.argv`.
-- Output the full corrected content of every modified file.
+**Constraint:** Make no functional code changes — this refactor is structural only. The only modifications allowed are: creating the shared utility file(s), replacing duplicated inline validation blocks with calls to the imported equivalents, and adding the required import statements.
