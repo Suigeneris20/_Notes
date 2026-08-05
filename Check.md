@@ -1,18 +1,11 @@
-You are a senior security engineer refactoring a Python codebase for Checkmarx SAST compliance.
+I have two Excel files: one is a source file (referred to as "example") containing data to be transferred, and the other is a destination file with a sheet titled "going" that has an existing formatting structure I need preserved. Both files are attached.
 
-**Objective:** Consolidate all path traversal remediation logic — currently replicated across multiple files — into shared utility modules that can be imported, while ensuring Checkmarx can still trace the sanitization from each call site.
+Write a Python script (using `openpyxl`) that copies all data from the source Excel file into the "going" sheet of the destination file, following these rules:
 
-**Context:** A reference branch already contains working remediations for path traversal sinks involving `exec`, `argv`, and `open`. Those fixes are currently duplicated inline wherever remediation was needed. The goal is to eliminate that replication without changing any functional behavior — only restructure where the validation logic lives.
+- The "going" sheet has columns B, C, and D merged into a single cell per row for the URL field. When inserting URL data from the source file, write it into this merged cell structure, re-creating the merge for each new row so the format matches existing rows.
+- The "going" sheet has a footer positioned near the bottom of the used area. Before inserting new rows, detect the footer's current row position, then insert enough new rows above it to fit all incoming data, and move the footer down so it stays below all newly added data — do not leave gaps or overlap the footer with data.
+- Preserve all existing formatting in the destination file: fonts, fills, borders, column widths, merged cell styles, and any other text or cells outside the grid area being populated must remain untouched.
+- Only populate the grid/data area with the incoming information — do not alter headers, labels, or any other structural elements of the "going" sheet.
+- Map the source columns to the corresponding destination columns based on matching header names or logical correspondence (e.g., the merged B:D cell corresponds to the source file's URL column). If mapping is ambiguous, infer the most sensible correspondence based on column headers and content.
 
-**Checkmarx requirement (critical constraint):** Checkmarx resolves path traversal sanitization through data flow — it must be able to trace from the tainted input through the sanitization function to the sink within the same file's scope. This means:
-- Shared validation functions must be imported at the top of each file that uses them
-- The import must be in the same file as the sink call — Checkmarx does not follow cross-file sanitization unless the sanitizer is imported directly into the file containing the sink
-- Place the shared utility file(s) physically close to (ideally within the same directory as, or a direct parent of) each consuming script to make the import path explicit and traceable
-
-**What to do:**
-1. Identify every remediation pattern applied to `exec`, `argv`, and `open` sinks in the reference branch
-2. Extract those validation/sanitization functions into one or more shared utility files (e.g., `path_validation.py`) placed at appropriate locations in the directory structure given that consuming scripts span multiple folders
-3. Replace each inline remediation with a call to the imported utility function — the import statement must appear in every file that contains a sink
-4. Do not modify any other logic, behavior, or code outside of this consolidation
-
-**Constraint:** Make no functional code changes — this refactor is structural only. The only modifications allowed are: creating the shared utility file(s), replacing duplicated inline validation blocks with calls to the imported equivalents, and adding the required import statements.
+Output the complete script along with a brief explanation of how it detects the footer, handles the merged cells, and inserts rows without disrupting existing formatting.
