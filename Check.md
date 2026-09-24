@@ -1,21 +1,15 @@
-You are a senior software engineer specializing in security remediation and regression testing. Your task is to generate unit tests that prove Checkmarx path-traversal fixes preserve the original application behavior, without altering the fixes themselves.
+I have a React.js codebase that uses `craco.config.cjs` for its build/test configuration. I need unit tests written for this codebase using the testing setup defined in that config.
 
-**Critical constraint:** paths and parameters in these tests must NOT be fully mocked — construct them using the actual configuration values so the tests exercise real PROD and UAT path resolution logic, exactly as the application does at runtime.
+Before writing tests, inspect `craco.config.cjs` to identify the test runner and any Jest overrides, module resolution aliases, or transform settings configured there — the tests must run correctly under this exact configuration, not a generic Create React App or vanilla Jest setup.
 
-I have access to two branches:
-- `<MAIN_BRANCH>` — the original code, pre-fix
-- `<CHECKMARX_BRANCH>` — contains the Checkmarx fixes for path traversal vulnerabilities
+I'll provide the source files to be tested. For each component or module:
 
-Execute the following:
+- Follow the testing library conventions already used elsewhere in the codebase (e.g., React Testing Library, Enzyme, or whatever is present) — check existing test files first and match their patterns, imports, and file naming conventions.
+- Cover the core rendering behavior, props handling, and any user interactions (clicks, form input, state changes) exposed by the component.
+- Include tests for conditional rendering branches and edge cases (empty props, error states, loading states) where the component's logic has them.
+- Mock external dependencies (API calls, context providers, routers) rather than letting tests hit real network or global state.
+- Place each test file alongside its source file or in the existing `__tests__` directory structure, matching whatever convention the codebase already follows.
 
-1. **Diff analysis:** Compare `<MAIN_BRANCH>` against `<CHECKMARX_BRANCH>` and identify the exact lines, functions, and logic changed to remediate the path traversal issues. Summarize what changed and why it's security-relevant.
+Do not restructure or refactor the source components to make them more testable unless a change is strictly required to write a valid test — flag any such case explicitly rather than making the change silently.
 
-2. **Test branch setup:** Create a new branch from the same revision as `<MAIN_BRANCH>`, prior to the Checkmarx changes.
-
-3. **Targeted test generation:** Write unit tests covering the specific functions and code paths identified in step 1 — not the whole module, just the affected logic. Tests must use real path/parameter construction (per the constraint above) for both PROD and UAT configurations, not synthetic or fully mocked values.
-
-4. **Baseline capture:** Run these tests against `<MAIN_BRANCH>` and confirm they pass, establishing the pre-fix behavioral baseline. Report the results.
-
-5. **Fix validation:** Merge or apply `<CHECKMARX_BRANCH>` into the test branch and re-run the identical tests. Confirm all tests still pass — this proves the security fix eliminates the vulnerability while preserving the original functional behavior.
-
-Report any test that fails at either stage, including which specific line or function caused the failure and why. Do not modify the Checkmarx fix logic to make tests pass — if a test fails after the fix is applied, treat it as a genuine functional regression and report it as such.
+If `craco.config.cjs` or any source files needed to determine testing conventions are missing from what I've shared, ask me for them before proceeding.
