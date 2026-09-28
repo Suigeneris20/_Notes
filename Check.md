@@ -1,15 +1,9 @@
-I have a React.js codebase that uses `craco.config.cjs` for its build/test configuration. I need unit tests written for this codebase using the testing setup defined in that config.
+I have two Checkmarx SAST XML scan reports comparing two implementations of the same sanitization logic: one where a single shared sanitization utility is imported and called from multiple locations, and another where the same sanitization script is duplicated into each consuming directory. The duplicated version successfully suppresses/reduces the vulnerability findings in Checkmarx, but the centralized (imported) version does not — Checkmarx still flags the vulnerabilities as unresolved even though the same sanitization logic is applied.
 
-Before writing tests, inspect `craco.config.cjs` to identify the test runner and any Jest overrides, module resolution aliases, or transform settings configured there — the tests must run correctly under this exact configuration, not a generic Create React App or vanilla Jest setup.
+Analyze both XML reports to identify the specific difference in how Checkmarx's taint analysis tracks and resolves the sanitization in each case. For each finding that differs between the two reports, note the vulnerability type, the affected file/line, and whether Checkmarx recognizes the sanitizer as effective.
 
-I'll provide the source files to be tested. For each component or module:
+I need to understand:
+1. Why Checkmarx's data-flow/taint engine successfully recognizes the duplicated inline sanitizer but fails to recognize the imported/centralized one as a valid sanitization point (e.g., issues with cross-file/cross-function taint propagation, missing sanitizer annotations, method signature mismatches, or Checkmarx configuration/rule definitions that only match certain call patterns).
+2. Concrete, actionable changes I can make to the centralized sanitization utility (or to Checkmarx's configuration, such as custom sanitizer definitions in the query/rule set) so that Checkmarx recognizes it as a valid sanitizer across all call sites — without having to duplicate the code.
 
-- Follow the testing library conventions already used elsewhere in the codebase (e.g., React Testing Library, Enzyme, or whatever is present) — check existing test files first and match their patterns, imports, and file naming conventions.
-- Cover the core rendering behavior, props handling, and any user interactions (clicks, form input, state changes) exposed by the component.
-- Include tests for conditional rendering branches and edge cases (empty props, error states, loading states) where the component's logic has them.
-- Mock external dependencies (API calls, context providers, routers) rather than letting tests hit real network or global state.
-- Place each test file alongside its source file or in the existing `__tests__` directory structure, matching whatever convention the codebase already follows.
-
-Do not restructure or refactor the source components to make them more testable unless a change is strictly required to write a valid test — flag any such case explicitly rather than making the change silently.
-
-If `craco.config.cjs` or any source files needed to determine testing conventions are missing from what I've shared, ask me for them before proceeding.
+Base your analysis strictly on the evidence in the two XML reports (finding IDs, query names, source/sink/sanitizer nodes in the data-flow paths). Where the reports don't fully explain the behavior, state what's inferred versus confirmed, and note if the answer depends on the specific Checkmarx query definition being used. I'll upload both XML files for you to reference directly.
