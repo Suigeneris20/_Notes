@@ -1,9 +1,19 @@
-I have two Checkmarx SAST XML scan reports comparing two implementations of the same sanitization logic: one where a single shared sanitization utility is imported and called from multiple locations, and another where the same sanitization script is duplicated into each consuming directory. The duplicated version successfully suppresses/reduces the vulnerability findings in Checkmarx, but the centralized (imported) version does not — Checkmarx still flags the vulnerabilities as unresolved even though the same sanitization logic is applied.
+Find the root cause of a deployment failure in my `foi-DB` repo by comparing it against my `allegro` repo, which deploys successfully through the same Lightspeed Enterprise pipeline using Tekton and Harness. Your answer should explain why `foi-DB` fails and `allegro` doesn't, with the evidence that supports it.
 
-Analyze both XML reports to identify the specific difference in how Checkmarx's taint analysis tracks and resolves the sanitization in each case. For each finding that differs between the two reports, note the vulnerability type, the affected file/line, and whether Checkmarx recognizes the sanitizer as effective.
+**The failure in `foi-DB`:**
+"""
+<Error placeholder>
+"""
 
-I need to understand:
-1. Why Checkmarx's data-flow/taint engine successfully recognizes the duplicated inline sanitizer but fails to recognize the imported/centralized one as a valid sanitization point (e.g., issues with cross-file/cross-function taint propagation, missing sanitizer annotations, method signature mismatches, or Checkmarx configuration/rule definitions that only match certain call patterns).
-2. Concrete, actionable changes I can make to the centralized sanitization utility (or to Checkmarx's configuration, such as custom sanitizer definitions in the query/rule set) so that Checkmarx recognizes it as a valid sanitizer across all call sites — without having to duplicate the code.
+**What I want you to analyze:**
+- Both repos in full, with particular attention to the `ansible` folder, `playbook.yaml`, `site.yaml`, and the other scripts involved in the Lightspeed Enterprise deployment, including the Tekton and Harness pieces.
+- The differences between the two repos that bear on the deployment, noting which differences are incidental and which plausibly cause the error.
+- A thorough trace from the error message back to its origin in `foi-DB`'s configuration, playbooks, roles, variables, inventory, or pipeline definitions, and how `allegro` avoids that same failure point.
 
-Base your analysis strictly on the evidence in the two XML reports (finding IDs, query names, source/sink/sanitizer nodes in the data-flow paths). Where the reports don't fully explain the behavior, state what's inferred versus confirmed, and note if the answer depends on the specific Checkmarx query definition being used. I'll upload both XML files for you to reference directly.
+**What a good answer looks like:**
+- A clear conclusion on the most likely root cause, with the specific files, lines, or settings in each repo that back it up.
+- The differences you flag should connect to the error. Skip differences that have no effect on this failure, and say so when you consider a difference and rule it out.
+- Where the evidence points to more than one plausible cause, rank them by likelihood and explain what distinguishes them. If something can't be confirmed from the repos alone (for example, environment variables, secrets, or runtime state in Harness or the cluster), flag it as unverified and say what I should check.
+- A concrete fix for `foi-DB`, referencing the working approach in `allegro` where relevant.
+
+If any file, repo, or the error text itself is missing or appears to be a placeholder when you begin, state exactly what you still need from me, then proceed with the analysis based on everything that is available.
